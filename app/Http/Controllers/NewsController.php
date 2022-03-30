@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\NewsInd;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use App\Http\Requests\StoreNewsIndRequest;
-use App\Http\Requests\UpdateNewsIndRequest;
 
-class NewsIndController extends Controller
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +20,17 @@ class NewsIndController extends Controller
         if(request('search')) {
             $berita->where('title', 'like', '%'.request('search'). '%')->orWhere('content', 'like', '%'.request('search'). '%');
         }
-        return view('homepage', [
+        return view('homepage.homepage', [
+            "section" => "Berita",
+            "berita" => $berita->paginate(16)
+        ]);
+    }
+
+    public function category($category)
+    {
+        $berita = NewsInd::where('category', $category)->orderBy('tanggal_berita','asc');
+
+        return view('homepage.homepage', [
             "section" => "Berita",
             "berita" => $berita->paginate(16)
         ]);
@@ -40,10 +49,10 @@ class NewsIndController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreNewsIndRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreNewsIndRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -54,9 +63,12 @@ class NewsIndController extends Controller
      * @param  \App\Models\NewsInd  $newsInd
      * @return \Illuminate\Http\Response
      */
-    public function show($category)
+    public function show(NewsInd $news)
     {
-        //
+        return view('homepage.news', [
+            'section' => 'Berita',
+            'berita' => $news
+        ]);
     }
 
     /**
@@ -73,11 +85,11 @@ class NewsIndController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateNewsIndRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\NewsInd  $newsInd
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateNewsIndRequest $request, NewsInd $newsInd)
+    public function update(Request $request, NewsInd $newsInd)
     {
         //
     }

@@ -10,7 +10,15 @@
   @endif
 
   <div class="table-responsive col-lg-11">
-    <a href="/dashboard/news/create" class="btn btn-primary mb-3">Buat Berita Baru</a>
+    <div class="col-md-6">
+      <form action="/dashboard/news">
+      <div class="input-group mb-3 ">
+        <a href="/dashboard/news/create" class="btn btn-primary mb-3 me-3">Buat Berita Baru</a>
+        <input type="text" class="form-control mb-3 col-md-6" placeholder="Pencarian" name="search" value="{{ request('search') }}">
+        <button class="btn btn-primary mb-3" type="submit">Search</button>
+      </div>
+      </form>
+    </div>
     <table class="table table-striped table-sm">
       <thead>
         <tr>

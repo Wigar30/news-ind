@@ -3,10 +3,9 @@
 use App\Models\Post;
 use App\Models\NewsInd;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\NewsIndController;
-use App\Http\Controllers\CategoryNewsController;
 use App\Http\Controllers\DashboardNewsController;
 use App\Http\Controllers\DashboardCategoryController;
 
@@ -29,14 +28,12 @@ Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('/news', [NewsIndController::class, 'index']);
-Route::get('/news/category', [CategoryNewsController::class, 'category']);
-// Route::get('/categories/{category}', function ($category) {
-//     return view('category', [
-//         "section" => "Admin",
-//         "berita" => NewsInd::latest('tanggal_berita')->where('category', 'pimpinan')->paginate(16)
-//     ]);
-// });
+Route::get('/dashboard', function () {
+    return view('dashboard.index');
+});
 
+Route::get('/news/category/{category}', [NewsController::class, 'category']);
+
+Route::resource('/news', NewsController::class);
 Route::resource('/dashboard/news', DashboardNewsController::class);
 Route::resource('/dashboard/categories', DashboardCategoryController::class);

@@ -17,8 +17,12 @@ class DashboardNewsController extends Controller
      */
     public function index()
     {
+        $berita = NewsInd::orderBy('id','asc');
+        if(request('search')) {
+            $berita->where('title', 'like', '%'.request('search'). '%')->orWhere('content', 'like', '%'.request('search'). '%');
+        }
         return view('dashboard.news.index', [
-            'berita' => NewsInd::latest('tanggal_berita')->first()->paginate(20)
+            'berita' => $berita->paginate(20)
         ]);
     }
 
