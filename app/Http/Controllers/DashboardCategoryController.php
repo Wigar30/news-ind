@@ -15,8 +15,12 @@ class DashboardCategoryController extends Controller
      */
     public function index()
     {
+        $categories = Category::orderBy('id','asc');
+        if(request('search')) {
+            $categories->where('category', 'like', '%'.request('search'). '%');
+        }
         return view('dashboard.category.index', [
-            'categories' => Category::latest('tanggal_input')->first()->paginate(20)
+            'categories' => $categories->paginate(20)
         ]);
     }
 

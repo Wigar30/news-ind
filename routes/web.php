@@ -33,7 +33,9 @@ Route::get('/dashboard', function () {
 });
 
 Route::get('/news/category/{category}', [NewsController::class, 'category']);
+Route::get('/dashboard/news/export', [NewsController::class, 'export']);
 
 Route::resource('/news', NewsController::class);
 Route::resource('/dashboard/news', DashboardNewsController::class);
 Route::resource('/dashboard/categories', DashboardCategoryController::class);
+

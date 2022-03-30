@@ -1,5 +1,7 @@
-@extends('layouts.mainnew')
+@extends('layouts.main')
 
+<!-- Page Header-->
+@include('partials.headernew')
 @section('container')
 
   <div class="row justify-content-center">

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\NewsInd;
+use App\Exports\NewsExport;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class NewsController extends Controller
 {
@@ -35,6 +37,11 @@ class NewsController extends Controller
             "berita" => $berita->paginate(16)
         ]);
     }
+
+    public function export()
+	{
+		return Excel::download(new NewsExport, 'news.xlsx');
+	}
 
     /**
      * Show the form for creating a new resource.
