@@ -18,5 +18,7 @@ class NewsInd extends Model
         return 'id';
     }
 
+    protected $guarded = [];
     protected $table = 'newsind';
+    public $timestamps = false;
 }

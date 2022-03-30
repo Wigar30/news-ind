@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\NewsInd;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class DashboardNewsController extends Controller
 {
@@ -26,7 +29,9 @@ class DashboardNewsController extends Controller
      */
     public function create()
     {
-        return view('dashboard.news.create');
+        return view('dashboard.news.create', [
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -37,7 +42,26 @@ class DashboardNewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'category' => 'required',
+            'user_input' => 'required',
+            'user_update' => 'required',
+            'content' => '',
+            'status' => ''
+        ]);
+
+        $validatedData['tanggal_berita'] = Carbon::now()->toDateString();
+        
+        if (isset($validatedData['status']) && $validatedData['status'] == 'on') {
+            $validatedData['status'] = 1;
+        } else {
+            $validatedData['status'] = 0;
+        }
+
+        NewsInd::create($validatedData);
+
+        return redirect('/dashboard/news')->with('success', 'Berhasil Menyimpan!');
     }
 
     /**
@@ -59,9 +83,12 @@ class DashboardNewsController extends Controller
      * @param  \App\Models\NewsInd  $newsInd
      * @return \Illuminate\Http\Response
      */
-    public function edit(NewsInd $newsInd)
+    public function edit(NewsInd $news)
     {
-        //
+        return view('dashboard.news.edit', [
+            'berita' => $news,
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -71,9 +98,28 @@ class DashboardNewsController extends Controller
      * @param  \App\Models\NewsInd  $newsInd
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NewsInd $newsInd)
+    public function update(Request $request, NewsInd $news)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'category' => 'required',
+            'user_input' => 'required',
+            'user_update' => 'required',
+            'content' => '',
+            'status' => ''
+        ]);
+        
+        $validatedData['tanggal_berita'] = $news->tanggal_berita;
+
+        if (isset($validatedData['status']) && $validatedData['status'] == 'on') {
+            $validatedData['status'] = 1;
+        } else {
+            $validatedData['status'] = 0;
+        }
+
+        NewsInd::where('id', $news->id)->update($validatedData);
+
+        return redirect('/dashboard/news')->with('success', 'Berhasil Mengubah!');
     }
 
     /**
@@ -82,8 +128,10 @@ class DashboardNewsController extends Controller
      * @param  \App\Models\NewsInd  $newsInd
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NewsInd $newsInd)
+    public function destroy(NewsInd $news)
     {
-        //
+        NewsInd::destroy($news->id);
+
+        return redirect('/dashboard/news')->with('success', 'Berita Berhasil Di Hapus!');
     }
 }

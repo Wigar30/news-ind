@@ -16,7 +16,7 @@ class NewsIndController extends Controller
      */
     public function index()
     {
-        $berita = NewsInd::latest('tanggal_berita');
+        $berita = NewsInd::latest('tanggal_berita')->where('status', 1);
 
         if(request('search')) {
             $berita->where('title', 'like', '%'.request('search'). '%')->orWhere('content', 'like', '%'.request('search'). '%');
@@ -56,12 +56,7 @@ class NewsIndController extends Controller
      */
     public function show($category)
     {
-        $berita = NewsInd::latest('tanggal_berita')->where('category', $category);
-
-        return view('homepage', [
-            "section" => "Berita",
-            "berita" => $berita->paginate(16)
-        ]);
+        //
     }
 
     /**

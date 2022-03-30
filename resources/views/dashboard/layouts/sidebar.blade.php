@@ -7,14 +7,16 @@
           Dashboard
         </a>
       </li>
+      
       <li class="nav-item">
         <a class="nav-link {{ Request::is('dashboard/news*') ? 'active' : '' }}" href="/dashboard/news">
           <span data-feather="file"></span>
           Berita
         </a>
       </li>
+
       <li class="nav-item">
-        <a class="nav-link {{ Request::is('dashboard/categories* ') ? 'active' : '' }}" href="/dashboard/categories">
+        <a class="nav-link {{ Request::is('dashboard/categories*') ? 'active' : '' }}" href="/dashboard/categories">
           <span data-feather="file"></span>
           Kategori
         </a>

@@ -24,7 +24,7 @@
           @csrf
           <div class="form-floating">
             <input type="username" name="email" class="form-control" @error('email') is-invalid @enderror id="email" placeholder="name@example.com" required>
-            <label for="floatingInput">Email address</label>
+            <label for="floatingInput">Username</label>
           </div>
           <div class="form-floating">
             <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>

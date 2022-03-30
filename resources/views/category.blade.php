@@ -34,7 +34,7 @@
                                 </small>
                             </p>
                             <p class="card-text">{!! $post['content'] !!}</p>
-                            <a href="/post/{{ $post['id'] }}" class="btn btn-primary">Baca Selengkapnya</a>
+                            <a href="/post/{{ $post['id'] }}" class="btn btn-primary">Baca</a>
                         </div>
                     </div>
                 </div>

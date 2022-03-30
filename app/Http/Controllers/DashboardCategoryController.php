@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,7 @@ class DashboardCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.category.create');
     }
 
     /**
@@ -37,7 +38,24 @@ class DashboardCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'category' => 'required',
+            'user_input' => 'required',
+            'user_update' => 'required',
+            'status' => ''
+        ]);
+
+        $validatedData['tanggal_input'] = Carbon::now()->toDateString();
+        
+        if (isset($validatedData['status']) && $validatedData['status'] == 'on') {
+            $validatedData['status'] = 1;
+        } else {
+            $validatedData['status'] = 0;
+        }
+
+        Category::create($validatedData);
+
+        return redirect('/dashboard/categories')->with('success', 'Berhasil Menyimpan!');
     }
 
     /**
@@ -59,9 +77,11 @@ class DashboardCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view('dashboard.category.edit', [
+            'category' => $category
+        ]);
     }
 
     /**
@@ -71,9 +91,26 @@ class DashboardCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $validatedData = $request->validate([
+            'category' => 'required',
+            'user_input' => 'required',
+            'user_update' => 'required',
+            'status' => ''
+        ]);
+        
+        $validatedData['tanggal_input'] = $category->tanggal_input;
+
+        if (isset($validatedData['status']) && $validatedData['status'] == 'on') {
+            $validatedData['status'] = 1;
+        } else {
+            $validatedData['status'] = 0;
+        }
+
+        Category::where('id', $category->id)->update($validatedData);
+
+        return redirect('/dashboard/categories')->with('success', 'Berhasil Mengubah!');
     }
 
     /**
@@ -82,8 +119,10 @@ class DashboardCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        Category::destroy($category->id);
+
+        return redirect('/dashboard/categories')->with('success', 'Kategori Berhasil Di Hapus!');
     }
 }
