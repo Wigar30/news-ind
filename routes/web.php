@@ -4,8 +4,8 @@ use App\Models\Post;
 use App\Models\NewsInd;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardNewsController;
 use App\Http\Controllers\DashboardCategoryController;
 
@@ -20,9 +20,6 @@ use App\Http\Controllers\DashboardCategoryController;
 |
 */
 
-Route::get('/', [PostController::class, 'index']);
-Route::get('/post/{slug}', [PostController::class, 'show']);
-
 Route::get('/admin', [LoginController::class, 'index']);
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'authenticate']);
@@ -32,6 +29,7 @@ Route::get('/dashboard', function () {
     return view('dashboard.index');
 });
 
+Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/news/category/{category}', [NewsController::class, 'category']);
 Route::get('/dashboard/news/export', [NewsController::class, 'export']);
 

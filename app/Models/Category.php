@@ -14,6 +14,8 @@ class Category extends Model
         return $this->hasMany(NewsInd::class);
     }
 
+    public static $_table = "Category";
+
     protected $guarded = [];
     protected $table = 'category';
     public $timestamps = false;

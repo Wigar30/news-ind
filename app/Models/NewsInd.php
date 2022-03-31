@@ -17,6 +17,7 @@ class NewsInd extends Model
     {
         return 'id';
     }
+    public static $_table = "NewsInd";
 
     protected $guarded = [];
     protected $table = 'newsind';
