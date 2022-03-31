@@ -17,7 +17,7 @@ class DashboardNewsController extends Controller
      */
     public function index()
     {
-        $berita = NewsInd::orderBy('id','asc');
+        $berita = NewsInd::join('category', 'category.category', '=', 'newsind.category');
         if(request('search')) {
             $berita->where('title', 'like', '%'.request('search'). '%')->orWhere('content', 'like', '%'.request('search'). '%');
         }

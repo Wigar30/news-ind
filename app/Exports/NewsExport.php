@@ -12,6 +12,12 @@ class NewsExport implements FromCollection
     */
     public function collection()
     {
-        return NewsInd::all()->take(20);
+
+        if(request('from') && request('to')) {
+            // $berita->where('title', 'like', '%'.request('search'). '%')->orWhere('content', 'like', '%'.request('search'). '%');
+            $from = request('from');
+            $to = request('to');
+        }
+        return NewsInd::whereBetween('tanggal_berita', [$from, $to])->get();
     }
 }

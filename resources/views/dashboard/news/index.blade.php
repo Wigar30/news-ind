@@ -18,6 +18,16 @@
             <input type="text" class="form-control mb-3" placeholder="Pencarian" name="search" value="{{ request('search') }}">
           </div>
             <button class="btn btn-primary mb-3" type="submit">Search</button>
+
+            <div class="col-md-6">
+              <input type="text" class="form-control mb-3" placeholder="from" name="from" value="{{ request('from') }}">
+            </div>
+              <button class="btn btn-primary mb-3" type="submit">Search</button>
+              
+            <div class="col-md-6">
+              <input type="text" class="form-control mb-3" placeholder="to" name="to" value="{{ request('to') }}">
+            </div>
+              <button class="btn btn-primary mb-3" type="submit">Search</button>
         </div>
       </form>
       <div class="btn-toolbar mb-2 mb-md-0">
@@ -37,6 +47,7 @@
             <th scope="col">User Input</th>
             <th scope="col">User Update</th>
             <th scope="col">Tanggal Update</th>
+            <th scope="col">akd</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -51,6 +62,7 @@
               <td>{{ $news->user_input }}</td>
               <td>{{ $news->user_update }}</td>
               <td>{{ $news->tanggal_update }}</td>
+              <td>{{ $news->akd }}</td>
               <td>
                 <a href="/dashboard/news/{{ $news->id }}" class="badge bg-info"><span data-feather="eye"></span></a>
                 <a href="/dashboard/news/{{ $news->id }}/edit" class="badge bg-warning"><span data-feather="edit"></span></a>
